@@ -9,6 +9,20 @@ public interface PartialFunction<I,O> extends Function<I,O>, Predicate<I> {
         return test(i);
     }
 
+    static <T> PartialFunction<T, T> identity() {
+        return new PartialFunction<T, T>() {
+            @Override
+            public boolean test(T t) {
+                return true;
+            }
+
+            @Override
+            public T apply(T t) {
+                return t;
+            }
+        };
+    }
+
     default <V> PartialFunction<I, V> thenMap(Function<? super O, ? extends V> after) {
         return new PartialFunction<I, V>() {
             @Override

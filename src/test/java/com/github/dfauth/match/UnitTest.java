@@ -8,11 +8,21 @@ import org.slf4j.LoggerFactory;
 import static com.github.dfauth.match.Matcher._case;
 import static com.github.dfauth.match.Matcher.match;
 import static com.github.dfauth.match.Matchers.instanceOf;
+import static com.github.dfauth.match.PartialFunction.identity;
 import static org.junit.Assert.assertEquals;
 
 public class UnitTest {
 
     private static final Logger logger = LoggerFactory.getLogger(UnitTest.class);
+
+    @Test
+    public void testSimplified() throws Throwable {
+        Try<Integer> test = Try.success(1);
+        assertEquals(test, match(test).using(
+                _case(identity())
+                ).orElseThrow(() -> new RuntimeException(""))
+        );
+    }
 
     @Test
     public void testIt() {

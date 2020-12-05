@@ -1,18 +1,19 @@
 package com.github.dfauth.match;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class Case<T,R> implements PartialFunction<T,R> {
 
     private final PartialFunction<T,R> nested;
-    private Predicate<R> p;
+    private Optional<Predicate<R>> optP = Optional.empty();
 
     public Case(PartialFunction<T, R> nested) {
         this.nested = nested;
     }
 
     public Case<T,R> andIf(Predicate<R> p) {
-        this.p = p;
+        this.optP = Optional.ofNullable(p);
         return this;
     }
 
@@ -24,7 +25,7 @@ public class Case<T,R> implements PartialFunction<T,R> {
     @Override
     public boolean test(T t) {
         try {
-            return nested.test(t) && p.test(apply(t));
+            return optP.map(p -> p.test(apply(t))).orElse(true) && nested.test(t);
         } catch (RuntimeException e) {
             return false;
         }

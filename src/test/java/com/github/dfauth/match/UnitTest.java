@@ -18,8 +18,9 @@ public class UnitTest {
     public void testIt() {
         Try<Integer> test = Try.success(1);
         assertEquals(1, match(test).using(
-                _case(instanceOf(Try.Success.class)).thenMap(s -> s.result()))
-                .orElse(0)
+                _case(instanceOf(Try.Success.class)
+                        .thenMap(s -> s.result()))
+                ).orElse(0)
         );
     }
 

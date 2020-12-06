@@ -16,12 +16,8 @@ public class Matcher<T> {
         this.target = target;
     }
 
-    public static final <T> Matcher match(T t) {
+    public static final <T> Matcher<T> match(T t) {
         return new Matcher(t);
-    }
-
-    public static final <T,R> PartialFunction<T,R> _case(Case<T,R> _case) {
-        return _case;
     }
 
     public static final <T,R> PartialFunction<T,R> _case(PartialFunction<T,R> p) {

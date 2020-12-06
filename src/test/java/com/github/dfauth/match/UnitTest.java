@@ -16,7 +16,7 @@ public class UnitTest {
     private static final Logger logger = LoggerFactory.getLogger(UnitTest.class);
 
     @Test
-    public void testSimplified() throws Throwable {
+    public void testSimplified() {
         Try<Integer> test = Try.success(1);
         assertEquals(test, match(test).using(
                 _case(identity())
